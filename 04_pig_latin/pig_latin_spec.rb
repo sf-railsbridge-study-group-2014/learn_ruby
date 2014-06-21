@@ -17,9 +17,11 @@
 #
 #
 
-require "pig_latin"
+require_relative "pig_latin"
 
 describe "#translate" do
+
+context 'in progress' do
 
   it "translates a word beginning with a vowel" do
     s = translate("apple")
@@ -44,6 +46,8 @@ describe "#translate" do
   it "translates a word beginning with three consonants" do
     translate("three").should == "eethray"
   end
+
+end
 
   it "counts 'sch' as a single phoneme" do
     s = translate("school")
