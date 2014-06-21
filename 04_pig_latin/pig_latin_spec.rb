@@ -21,8 +21,6 @@ require_relative "pig_latin"
 
 describe "#translate" do
 
-context 'in progress' do
-
   it "translates a word beginning with a vowel" do
     s = translate("apple")
     s.should == "appleay"
@@ -46,8 +44,6 @@ context 'in progress' do
   it "translates a word beginning with three consonants" do
     translate("three").should == "eethray"
   end
-
-end
 
   it "counts 'sch' as a single phoneme" do
     s = translate("school")
@@ -73,4 +69,15 @@ end
   # * write a test asserting that capitalized words are still capitalized (but with a different initial capital letter, of course)
   # * retain the punctuation from the original phrase
 
+  it 'translates capitalized words' do
+    translate('Apple').should == 'Appleay'
+    translate('Banana').should == 'Ananabay'
+    translate("Cherry").should == 'Errychay'
+    translate("Eat Pie").should == "Eatay Iepay"
+    translate("Three").should == "Eethray"
+    translate("School").should == "Oolschay"
+    translate("Quiet").should == "Ietquay"
+    translate("Square").should == "Aresquay"
+    translate("The Quick Brown Fox").should == "Ethay Ickquay Ownbray Oxfay"
+  end
 end

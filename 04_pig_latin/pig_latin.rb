@@ -6,9 +6,13 @@ def translate(sentence)
     if first_vowel?(word)
       "#{word}ay"
     else
-      prefix = extract_leading_phonemes(word)
+      was_capitalized = word[0].capitalize == word[0]
+
+      prefix = extract_leading_phonemes(word).downcase
       prefix_len = prefix.length
       remaining_letters = word[prefix_len..-1]
+
+      remaining_letters.capitalize! if was_capitalized
       "#{remaining_letters}#{prefix}ay"
     end
   end
@@ -19,7 +23,7 @@ end
 #### utility methods
 
 def extract_leading_phonemes(word)
-  word =~ /^(sch|qu|[^aeiou])+/ ? $& : ''
+  word =~ /^(sch|qu|[^aeiou])+/i ? $& : ''
 end
 
 def first_vowel?(word)
@@ -27,7 +31,7 @@ def first_vowel?(word)
 end
 
 def is_vowel?(letter)
-  letter =~ /^[aeiou]$/
+  letter =~ /^[aeiou]$/i
 end
 
 def leading_consonants?(word, count)
