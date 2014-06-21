@@ -2,31 +2,34 @@
 
 def translate(sentence)
   words = sentence.split
-  latinized_words = words.map do |word|
-    punct_idx = (word =~ /\W*$/)
-    punctuation = word[punct_idx..-1]
-    word = word[0...punct_idx]
+  transformed_words = words.map do |word|
+    punctuation_idx = (word =~ /\W*$/)
+    punctuation = word[punctuation_idx..-1]
+    stripped_word = word[0...punctuation_idx]
 
-    sans_punct = if first_vowel?(word)
-      "#{word}ay"
-    else
-      was_capitalized = word[0].capitalize == word[0]
-
-      prefix = extract_leading_phonemes(word).downcase
-      prefix_len = prefix.length
-
-      remaining_letters = word[prefix_len..-1]
-      remaining_letters.capitalize! if was_capitalized
-      "#{remaining_letters}#{prefix}ay"
-    end
-
-    "#{sans_punct}#{punctuation}"
+    transformed = apply_pig_latin_rules(stripped_word)
+    "#{transformed}#{punctuation}"
   end
 
-  latinized_words.join(' ')
+  transformed_words.join(' ')
 end
 
 #### utility methods
+
+def apply_pig_latin_rules(word)
+  if first_vowel?(word)
+    "#{word}ay"
+  else
+    was_capitalized = word[0].capitalize == word[0]
+
+    prefix = extract_leading_phonemes(word).downcase
+    prefix_len = prefix.length
+
+    remaining_letters = word[prefix_len..-1]
+    remaining_letters.capitalize! if was_capitalized
+    "#{remaining_letters}#{prefix}ay"
+  end
+end
 
 def extract_leading_phonemes(word)
   word =~ /^(sch|qu|[^aeiou])+/i ? $& : ''
