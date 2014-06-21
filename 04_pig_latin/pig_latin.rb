@@ -3,18 +3,24 @@
 def translate(sentence)
   words = sentence.split
   latinized_words = words.map do |word|
-    if first_vowel?(word)
+    punct_idx = (word =~ /\W*$/)
+    punctuation = word[punct_idx..-1]
+    word = word[0...punct_idx]
+
+    sans_punct = if first_vowel?(word)
       "#{word}ay"
     else
       was_capitalized = word[0].capitalize == word[0]
 
       prefix = extract_leading_phonemes(word).downcase
       prefix_len = prefix.length
-      remaining_letters = word[prefix_len..-1]
 
+      remaining_letters = word[prefix_len..-1]
       remaining_letters.capitalize! if was_capitalized
       "#{remaining_letters}#{prefix}ay"
     end
+
+    "#{sans_punct}#{punctuation}"
   end
 
   latinized_words.join(' ')
