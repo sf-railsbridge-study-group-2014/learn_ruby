@@ -17,7 +17,7 @@
 #
 #
 
-require "pig_latin"
+require_relative "pig_latin"
 
 describe "#translate" do
 
@@ -69,4 +69,27 @@ describe "#translate" do
   # * write a test asserting that capitalized words are still capitalized (but with a different initial capital letter, of course)
   # * retain the punctuation from the original phrase
 
+  it 'translates capitalized words' do
+    translate('Apple').should == 'Appleay'
+    translate('Banana').should == 'Ananabay'
+    translate("Cherry").should == 'Errychay'
+    translate("Eat Pie").should == "Eatay Iepay"
+    translate("Three").should == "Eethray"
+    translate("School").should == "Oolschay"
+    translate("Quiet").should == "Ietquay"
+    translate("Square").should == "Aresquay"
+    translate("The Quick Brown Fox").should == "Ethay Ickquay Ownbray Oxfay"
+  end
+
+  it 'retains punctuation from original phrase' do
+    translate('Apple!').should == 'Appleay!'
+    translate('Banana!!').should == 'Ananabay!!'
+    translate("Cherry!!!").should == 'Errychay!!!'
+    translate("Eat Pie!!!!").should == "Eatay Iepay!!!!"
+    translate("Three.").should == "Eethray."
+    translate("School?").should == "Oolschay?"
+    translate("Quiet...").should == "Ietquay..."
+    translate("Square???").should == "Aresquay???"
+    translate("The Quick Brown Fox!").should == "Ethay Ickquay Ownbray Oxfay!"
+  end
 end
